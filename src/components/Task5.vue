@@ -51,7 +51,13 @@
                 <template v-for="(traveller, index) in item.travellers">
                   <v-tooltip top open-delay="300" :key="index">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-avatar size="30" color="green" v-bind="attrs" v-on="on">
+                      <v-avatar
+                        size="30"
+                        :color="getRandomColour()"
+                        style="transform: scale(1.1)"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
                         <span class="white--text font-weight-medium">{{
                           traveller | initials
                         }}</span>
@@ -97,6 +103,7 @@
 import { loadTrips } from "@/mock.js";
 /* methods */
 import { getStatusByName } from "@/constants/StatusList";
+import { getRandomColour } from "@/utils/fns";
 
 export default {
   name: "Task5",
@@ -113,6 +120,7 @@ export default {
 
   methods: {
     getStatusByName,
+    getRandomColour,
 
     loadTrips() {
       this.trips = loadTrips();
