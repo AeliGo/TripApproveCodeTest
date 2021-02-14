@@ -10,3 +10,17 @@ import { differenceInYears, parse } from "date-fns";
 export const getAge = (date, format = "dd/MM/yyyy") => {
   return differenceInYears(new Date(), parse(date, format, new Date()));
 };
+
+/**
+ * get random colour hexString
+ *
+ * @return colour hexString {String}
+ */
+export const getRandomColour = () => {
+  const letters = "0123456789ABCDEF";
+  let colour = "#";
+  for (var i = 0; i < 6; i++) {
+    colour += letters[Math.floor(Math.random() * 16)];
+  }
+  return colour;
+};
