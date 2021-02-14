@@ -37,6 +37,7 @@
           <v-card-text>
             <!-- EDIT CODE BELOW -->
             <v-data-table
+              class="is-grid"
               :headers="[
                 { text: 'ID', value: 'id' },
                 { text: 'Name', value: 'name' },
