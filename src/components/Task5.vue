@@ -101,6 +101,11 @@
         </v-card>
       </v-col>
     </v-row>
+    <trip-detail-modal
+      v-if="dialogProps.isActive"
+      :isActive.sync="dialogProps.isActive"
+      :data="dialogProps.data"
+    />
   </v-container>
 </template>
 
@@ -110,13 +115,23 @@ import { loadTrips } from "@/mock.js";
 /* methods */
 import { getStatusByName } from "@/constants/StatusList";
 import { getRandomColour, getCountryByNameOrAlpha2 } from "@/utils/fns";
+/* modals */
+import TripDetailModal from "@/components/TripDetailModal";
 
 export default {
   name: "Task5",
 
+  components: {
+    TripDetailModal,
+  },
+
   data() {
     return {
       trips: [],
+      dialogProps: {
+        isActive: false,
+        data: {},
+      },
     };
   },
 
@@ -147,7 +162,12 @@ export default {
       };
     },
 
-    handleRowClick() {},
+    handleRowClick(row) {
+      this.dialogProps = {
+        isActive: true,
+        data: row,
+      };
+    },
   },
 };
 </script>
