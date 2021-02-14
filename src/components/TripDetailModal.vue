@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     :value="isActive"
-    max-width="600px"
+    max-width="700px"
     @input="(value) => $emit('update:isActive', value)"
   >
     <v-row no-gutters>
@@ -36,11 +36,11 @@
               </v-chip>
               <span>
                 <v-chip label small color="green lighten-5">
-                  <span>{{ destination.start }}</span>
+                  <span>{{ destination.start | date }}</span>
                 </v-chip>
                 ~
                 <v-chip label small color="green lighten-5">
-                  <span>{{ destination.start }}</span>
+                  <span>{{ destination.start | date }}</span>
                 </v-chip>
               </span>
             </div>
