@@ -2,30 +2,33 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12" class="my-4">
-        <div class="text-h4 mb-3">
-          Task 1
-        </div>
+        <div class="text-h4 mb-3">Task 1</div>
 
         <div class="subheading font-weight-regular">
           We want to create a dynamic profile card.
 
           <div class="py-3">
-            Open the file <code>/src/components/Task1.vue</code> and modify the code below so that:
+            Open the file <code>/src/components/Task1.vue</code> and modify the
+            code below so that:
             <ol class="list-center">
               <li>
-                The user profile information (first name, last name, occupation) is hidden by default.
+                The user profile information (first name, last name, occupation)
+                is hidden by default.
               </li>
               <li>
-                When the "toggle" button is clicked, the user profile information is displayed.
+                When the "toggle" button is clicked, the user profile
+                information is displayed.
               </li>
               <li>
-                When the "toggle" button is clicked a second time, the user profile information is hidden.
+                When the "toggle" button is clicked a second time, the user
+                profile information is hidden.
               </li>
             </ol>
             Once completed, proceed to the next task.
           </div>
           <div class="text-caption">
-            Note: feel free to edit any of the component properties (data, methods, etc..)
+            Note: feel free to edit any of the component properties (data,
+            methods, etc..)
           </div>
         </div>
       </v-col>
@@ -40,7 +43,7 @@
           </v-card-title>
 
           <v-card-actions>
-            <v-btn color="primary" small text>
+            <v-btn color="primary" small text @click="handleToggleVisibility">
               toggle
             </v-btn>
           </v-card-actions>
@@ -50,7 +53,7 @@
               <v-col cols="3">
                 <strong>First Name:</strong>
               </v-col>
-              <v-col cols="9">
+              <v-col cols="9" v-if="isVisible">
                 <div>John</div>
               </v-col>
             </v-row>
@@ -58,7 +61,7 @@
               <v-col cols="3">
                 <strong>Last Name:</strong>
               </v-col>
-              <v-col cols="9">
+              <v-col cols="9" v-if="isVisible">
                 <div>Wick</div>
               </v-col>
             </v-row>
@@ -66,7 +69,7 @@
               <v-col cols="3">
                 <strong>Occupation:</strong>
               </v-col>
-              <v-col cols="9">
+              <v-col cols="9" v-if="isVisible">
                 <div>Retired-hitman wannabe</div>
               </v-col>
             </v-row>
@@ -78,12 +81,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'Task1',
-    data () {
-      return {}
+export default {
+  name: "Task1",
+
+  data() {
+    return {
+      isVisible: false,
+    };
+  },
+
+  methods: {
+    handleToggleVisibility() {
+      this.isVisible = !this.isVisible;
     },
-    methods: {
-    },
-  }
+  },
+};
 </script>
