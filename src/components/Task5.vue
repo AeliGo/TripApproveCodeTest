@@ -76,11 +76,17 @@
                   small
                   color="grey lighten-4"
                 >
-                  {{ destination.location }}
+                  <span class="pt-1" style="font-size: 18px">{{
+                    parseLocation(destination.location).flag
+                  }}</span>
+                  <span class="pl-2">{{
+                    parseLocation(destination.location).city
+                  }}</span>
                 </v-chip>
               </template>
               <template v-slot:[`item.status`]="{ item }">
                 <v-chip
+                  style="width: 100px; justify-content: center"
                   label
                   small
                   expand
@@ -103,7 +109,7 @@
 import { loadTrips } from "@/mock.js";
 /* methods */
 import { getStatusByName } from "@/constants/StatusList";
-import { getRandomColour } from "@/utils/fns";
+import { getRandomColour, getCountryByNameOrAlpha2 } from "@/utils/fns";
 
 export default {
   name: "Task5",
@@ -124,6 +130,21 @@ export default {
 
     loadTrips() {
       this.trips = loadTrips();
+    },
+
+    /**
+     * convert location string to country object with `flag` and `city`
+     *
+     * @param location {String} - e.g "Paris, France","Toronto, Canada"
+     * @return country {Object} - e.g {flag: flag emoji, city: Paris}
+     */
+    parseLocation(location) {
+      const [city, country = ""] = location.split(",");
+      const countryData = getCountryByNameOrAlpha2(country.trim());
+      return {
+        flag: countryData ? countryData.emoji : "",
+        city: countryData ? city : location,
+      };
     },
 
     handleRowClick() {},
