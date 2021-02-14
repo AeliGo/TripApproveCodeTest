@@ -2,19 +2,16 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12" class="my-4">
-        <div class="text-h4 mb-3">
-          Task 3
-        </div>
+        <div class="text-h4 mb-3">Task 3</div>
 
         <div class="subheading font-weight-regular">
           We want to display data in our table coming straight from our API.
 
           <div class="py-3">
-            Open the file <code>/src/components/Task3.vue</code> and modify the code below so that:
+            Open the file <code>/src/components/Task3.vue</code> and modify the
+            code below so that:
             <ol class="list-center">
-              <li>
-                Check the console error(s) and fix it.
-              </li>
+              <li>Check the console error(s) and fix it.</li>
               <li>
                 The table should display the following columns:
                 <ul>
@@ -27,8 +24,11 @@
             Once completed, proceed to the next task.
           </div>
           <div class="text-caption">
-            Note: feel free to edit any of the component properties (data, methods, etc..),
-            <br /> and use any of the <strong>date-fns</strong> library functions but <strong>do not modify mock.js</strong>
+            Note: feel free to edit any of the component properties (data,
+            methods, etc..),
+            <br />
+            and use any of the <strong>date-fns</strong> library functions but
+            <strong>do not modify mock.js</strong>
           </div>
         </div>
       </v-col>
@@ -38,11 +38,11 @@
         <v-card>
           <v-card-text>
             <v-data-table
-              :items="users"
+              :items="formattedUsers"
               :headers="[
-                {text: 'ID', value: 'id'},
-                {text: 'Name', value: 'name'},
-                {text: 'Age', value: 'age'},
+                { text: 'ID', value: 'id' },
+                { text: 'Name', value: 'fullName' },
+                { text: 'Age', value: 'age' },
               ]"
               hide-default-footer
             >
@@ -56,22 +56,39 @@
 </template>
 
 <script>
-  /* eslint-disable */
-  import { loadUsers } from '../mock.js'
-  import { parse } from 'date-fns'
+/* eslint-disable */
+import { loadUsers } from "@/mock.js";
+/* methods */
+import { getAge } from "@/utils/fns";
 
-  export default {
-    name: 'Task3',
-    data: () => ({
+export default {
+  name: "Task3",
+
+  data() {
+    return {
       users: [],
-    }),
-    created () {
-      const users = loadUsers()
-      users.forEach(user => {
-        user.parsedDOB = parse(item.dateOfBirth, 'dd/dd/dddd', new Date())
-      })
-      this.users = data
+    };
+  },
+
+  computed: {
+    formattedUsers() {
+      return this.users.map((user) => ({
+        ...user,
+        fullName: `${user.firstName} ${user.lastName}`,
+        age: getAge(user.dateOfBirth),
+      }));
     },
-  }
-  /* eslint-enable */
+  },
+
+  created() {
+    this.loadUsers();
+  },
+
+  methods: {
+    loadUsers() {
+      this.users = loadUsers();
+    },
+  },
+};
+/* eslint-enable */
 </script>
