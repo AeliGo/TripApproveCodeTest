@@ -48,12 +48,25 @@
           <v-card-subtitle> Total budget: ${{ totalBudgets }} </v-card-subtitle>
 
           <v-card-text>
-            <BudgetRow />
+            <budget-row
+              v-for="(row, index) in budgetRows"
+              :key="index"
+              :budgeTypes="budgeTypes"
+              :amount.sync="row.amount"
+              :type.sync="row.type"
+              @deleted="deleteRow(index)"
+            />
           </v-card-text>
 
           <v-card-actions>
             <v-spacer />
-            <v-btn fab dark small color="primary">
+            <v-btn
+              fab
+              dark
+              small
+              color="primary"
+              @click="insertRow(budgetRows.length)"
+            >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-card-actions>
@@ -64,18 +77,49 @@
 </template>
 
 <script>
-import BudgetRow from "./BudgetRow";
+/* mock */
+import { loadBudgetTypes } from "@/mock.js";
+/* components */
+import BudgetRow from "@/components/BudgetRow";
 
 export default {
   name: "Task4",
+
   components: {
     BudgetRow,
   },
+
   data() {
     return {
-      totalBudgets: 0,
+      budgeTypes: [],
+      budgetRows: [{}],
     };
   },
-  methods: {},
+
+  computed: {
+    totalBudgets() {
+      return this.budgetRows.reduce((acc, current) => {
+        return acc + (current.amount || 0);
+      }, 0);
+    },
+  },
+
+  created() {
+    this.loadBudgetTypes();
+  },
+
+  methods: {
+    loadBudgetTypes() {
+      this.budgeTypes = loadBudgetTypes();
+    },
+
+    insertRow(index, newRow = {}) {
+      this.budgetRows.splice(index, 0, newRow);
+    },
+
+    deleteRow(index) {
+      this.budgetRows.splice(index, 1);
+    },
+  },
 };
 </script>
